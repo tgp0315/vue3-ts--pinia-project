@@ -16,3 +16,17 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## 在线解析excel 预览
+
+```
+https://juejin.cn/post/7211805251216031801
+```
+
+## 下载  excel
+
+```
+https://blog.csdn.net/qq_40595893/article/details/124796429
+
+https://blog.csdn.net/qq_40830369/article/details/127262100
+```
