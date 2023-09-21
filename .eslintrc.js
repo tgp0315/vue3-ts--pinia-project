@@ -8,6 +8,14 @@ module.exports = {
       jsx: true
     }
   },
+  settings: {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   extends: [
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',

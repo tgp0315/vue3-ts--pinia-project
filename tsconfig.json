@@ -12,9 +12,10 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
+    "baseUrl": "./",
     "paths": {
-      "@": ["./src"],
-      "@/*": ["./src/*"]
+      "@": ["src"],
+      "@/*": ["src/*"]
     },
     /* Bundler mode */
     "resolveJsonModule": true,
