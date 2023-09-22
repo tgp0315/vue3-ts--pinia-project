@@ -9,7 +9,7 @@ const service = axios.create({
   timeout: 99999
 })
 let acitveAxios = 0
-let timer
+let timer: any
 const showLoading = () => {
   acitveAxios++
   if (timer) {
@@ -32,7 +32,10 @@ const closeLoading = () => {
 // http request 拦截器
 service.interceptors.request.use(
   config => {
-    if (!config.donNotShowLoading) {
+    const {
+      isShowLoading = true,
+    } = config.headers
+    if (isShowLoading) {
       showLoading()
     }
     const userStore = useUserStore()
@@ -45,7 +48,10 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    if (!error.config.donNotShowLoading) {
+    const {
+      isShowLoading = true
+    } = error.config.headers
+    if (isShowLoading) {
       closeLoading()
     }
     ElMessage({
@@ -61,8 +67,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     console.log(response, 'reponse')
+    const {
+      isShowLoading = true,
+      showMessage = true
+    } = response.config.headers
     const userStore = useUserStore()
-    if (!response.config.donNotShowLoading) {
+    if (isShowLoading) {
       closeLoading()
     }
     if (response.headers['new-token']) {
@@ -73,22 +83,29 @@ service.interceptors.response.use(
         response.data.msg = decodeURI(response.headers.msg)
       }
       return response.data
+    } else if (showMessage) {
+      // if  {
+        ElMessage({
+          showClose: true,
+          message: response.data.msg || decodeURI(response.headers.msg),
+          type: 'error'
+        })
+        if (response.data.data && response.data.data.reload) {
+          userStore.token = ''
+          localStorage.clear()
+          router.push({ name: 'Login', replace: true })
+        }
+        return Promise.reject(response.data.msg ? response.data : response)
+      // } 
     } else {
-      ElMessage({
-        showClose: true,
-        message: response.data.msg || decodeURI(response.headers.msg),
-        type: 'error'
-      })
-      if (response.data.data && response.data.data.reload) {
-        userStore.token = ''
-        localStorage.clear()
-        router.push({ name: 'Login', replace: true })
-      }
-      return Promise.reject(response.data.msg ? response.data : response)
+      return response.data
     }
   },
   error => {
-    if (!error.config.donNotShowLoading) {
+    const {
+      showLoading = true
+    } = error.config.headers
+    if (showLoading) {
       closeLoading()
     }
 

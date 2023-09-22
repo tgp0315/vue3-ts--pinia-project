@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // loader: 'postcss-loader',
   plugins: {
     "postcss-preset-env": {
