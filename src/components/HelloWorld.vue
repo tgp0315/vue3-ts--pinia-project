@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useMouse } from '@vueuse/core'
-import { ref } from 'vue'
+// import { ref } from 'vue'
 const { x, y } = useMouse()
+console.log(x, y)
 // const currentX = ref(x)
 // const currentY = ref(y)
 </script>

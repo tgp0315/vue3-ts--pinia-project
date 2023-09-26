@@ -7,6 +7,7 @@ const store = userStore()
 // 并且会跳过所有的 action 或非响应式 (不是 ref 或 reactive) 的属性
 const { name, num, double } = storeToRefs(store)
 const { updateName } = store
+console.log(name, num, double, updateName)
 // $reset() 方法将 state 重置为初始值
 store.$reset()
 </script>

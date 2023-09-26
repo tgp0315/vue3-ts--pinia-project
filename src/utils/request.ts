@@ -6,9 +6,10 @@ import router from '@/router/index'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 99999
+  timeout: 99999,
 })
 let acitveAxios = 0
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let timer: any
 const showLoading = () => {
   acitveAxios++
@@ -31,10 +32,8 @@ const closeLoading = () => {
 }
 // http request 拦截器
 service.interceptors.request.use(
-  config => {
-    const {
-      isShowLoading = true,
-    } = config.headers
+  (config) => {
+    const { isShowLoading = true } = config.headers
     if (isShowLoading) {
       showLoading()
     }
@@ -43,34 +42,28 @@ service.interceptors.request.use(
       'Content-Type': 'application/json',
       'x-token': userStore.token,
       'x-user-id': userStore.userInfo.ID,
-      ...config.headers
+      ...config.headers,
     }
     return config
   },
-  error => {
-    const {
-      isShowLoading = true
-    } = error.config.headers
+  (error) => {
+    const { isShowLoading = true } = error.config.headers
     if (isShowLoading) {
       closeLoading()
     }
     ElMessage({
       showClose: true,
       message: error,
-      type: 'error'
+      type: 'error',
     })
     return error
-  }
+  },
 )
 
 // http response 拦截器
 service.interceptors.response.use(
-  response => {
-    console.log(response, 'reponse')
-    const {
-      isShowLoading = true,
-      showMessage = true
-    } = response.config.headers
+  (response) => {
+    const { isShowLoading = true, showMessage = true } = response.config.headers
     const userStore = useUserStore()
     if (isShowLoading) {
       closeLoading()
@@ -85,75 +78,84 @@ service.interceptors.response.use(
       return response.data
     } else if (showMessage) {
       // if  {
-        ElMessage({
-          showClose: true,
-          message: response.data.msg || decodeURI(response.headers.msg),
-          type: 'error'
-        })
-        if (response.data.data && response.data.data.reload) {
-          userStore.token = ''
-          localStorage.clear()
-          router.push({ name: 'Login', replace: true })
-        }
-        return Promise.reject(response.data.msg ? response.data : response)
-      // } 
+      ElMessage({
+        showClose: true,
+        message: response.data.msg || decodeURI(response.headers.msg),
+        type: 'error',
+      })
+      if (response.data.data && response.data.data.reload) {
+        userStore.token = ''
+        localStorage.clear()
+        router.push({ name: 'Login', replace: true })
+      }
+      return Promise.reject(response.data.msg ? response.data : response)
+      // }
     } else {
       return response.data
     }
   },
-  error => {
-    const {
-      showLoading = true
-    } = error.config.headers
+  (error) => {
+    const { showLoading = true } = error.config.headers
     if (showLoading) {
       closeLoading()
     }
 
     if (!error.response) {
-      ElMessageBox.confirm(`
+      ElMessageBox.confirm(
+        `
         <p>检测到请求错误</p>
         <p>${error}</p>
-        `, '请求报错', {
-        dangerouslyUseHTMLString: true,
-        distinguishCancelAndClose: true,
-        confirmButtonText: '稍后重试',
-        cancelButtonText: '取消'
-      })
+        `,
+        '请求报错',
+        {
+          dangerouslyUseHTMLString: true,
+          distinguishCancelAndClose: true,
+          confirmButtonText: '稍后重试',
+          cancelButtonText: '取消',
+        },
+      )
       return
     }
 
     switch (error.response.status) {
       case 500:
-        ElMessageBox.confirm(`
+        ElMessageBox.confirm(
+          `
         <p>检测到接口错误${error}</p>
         <p>错误码<span style="color:red"> 500 </span>：此类错误内容常见于后台panic，请先查看后台日志，如果影响您正常使用可强制登出清理缓存</p>
-        `, '接口报错', {
-          dangerouslyUseHTMLString: true,
-          distinguishCancelAndClose: true,
-          confirmButtonText: '清理缓存',
-          cancelButtonText: '取消'
+        `,
+          '接口报错',
+          {
+            dangerouslyUseHTMLString: true,
+            distinguishCancelAndClose: true,
+            confirmButtonText: '清理缓存',
+            cancelButtonText: '取消',
+          },
+        ).then(() => {
+          const userStore = useUserStore()
+          userStore.token = ''
+          localStorage.clear()
+          router.push({ name: 'Login', replace: true })
         })
-          .then(() => {
-            const userStore = useUserStore()
-            userStore.token = ''
-            localStorage.clear()
-            router.push({ name: 'Login', replace: true })
-          })
         break
       case 404:
-        ElMessageBox.confirm(`
+        ElMessageBox.confirm(
+          `
           <p>检测到接口错误${error}</p>
           <p>错误码<span style="color:red"> 404 </span>：此类错误多为接口未注册（或未重启）或者请求路径（方法）与api路径（方法）不符--如果为自动化代码请检查是否存在空格</p>
-          `, '接口报错', {
-          dangerouslyUseHTMLString: true,
-          distinguishCancelAndClose: true,
-          confirmButtonText: '我知道了',
-          cancelButtonText: '取消'
-        })
+          `,
+          '接口报错',
+          {
+            dangerouslyUseHTMLString: true,
+            distinguishCancelAndClose: true,
+            confirmButtonText: '我知道了',
+            cancelButtonText: '取消',
+          },
+        )
         break
     }
 
     return Promise.reject(error)
-  }
+  },
 )
 export default service

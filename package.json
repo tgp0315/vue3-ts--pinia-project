@@ -2,13 +2,29 @@
   "name": "vue3-ts-pinia",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "prettier": "prettier --write",
-    "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
+    "eslint": "eslint --ext .js,.vue src --fix",
+    "add": "git add . ",
+    "cz": "npm run add && git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
+  "lint-staged": {
+    "src/*.{js,ts,vue}": [
+      "npm run eslint",
+      "npm run prettier"
+    ],
+    "src/**/*.{js,ts}": [
+      "npm run eslint",
+      "npm run prettier"
+    ]
   },
   "dependencies": {
     "@vueuse/core": "^10.4.1",
@@ -24,14 +40,22 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "@types/node": "^20.6.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-vue": "^4.2.3",
+    "commitizen": "^4.3.0",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^7.0.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "postcss": "^8.4.30",
     "postcss-preset-env": "^9.1.4",
     "prettier": "^3.0.3",
