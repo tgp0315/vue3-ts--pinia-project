@@ -1,7 +1,7 @@
 import axios from 'axios' // 引入axios
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { useUserStore } from '@/pinia/modules/user'
-import { emitter } from '@/utils/bus.js'
+// import { useUserStore } from '@/pinia/modules/user'
+import { emitter } from '@/utils/mitt'
 import router from '@/router/index'
 
 const service = axios.create({
@@ -32,16 +32,23 @@ const closeLoading = () => {
 }
 // http request 拦截器
 service.interceptors.request.use(
-  (config) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (config: any) => {
+    const url: string | undefined = config?.url
+    const urlArr = (url as string).split('/') as Array<string>
+    if (urlArr[0] === '') {
+      urlArr.splice(0, 1)
+    }
     const { isShowLoading = true } = config.headers
     if (isShowLoading) {
       showLoading()
     }
-    const userStore = useUserStore()
+    // const userStore = useUserStore()
     config.headers = {
       'Content-Type': 'application/json',
-      'x-token': userStore.token,
-      'x-user-id': userStore.userInfo.ID,
+      // 'x-token': userStore.token,
+      // 'x-user-id': userStore.userInfo.ID,
+      method: urlArr.join('-'),
       ...config.headers,
     }
     return config
@@ -64,13 +71,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const { isShowLoading = true, showMessage = true } = response.config.headers
-    const userStore = useUserStore()
+    // const userStore = useUserStore()
     if (isShowLoading) {
       closeLoading()
     }
-    if (response.headers['new-token']) {
-      userStore.setToken(response.headers['new-token'])
-    }
+    // if (response.headers['new-token']) {
+    //   userStore.setToken(response.headers['new-token'])
+    // }
     if (response.data.code === 0 || response.headers.success === 'true') {
       if (response.headers.msg) {
         response.data.msg = decodeURI(response.headers.msg)
@@ -84,7 +91,7 @@ service.interceptors.response.use(
         type: 'error',
       })
       if (response.data.data && response.data.data.reload) {
-        userStore.token = ''
+        // userStore.token = ''
         localStorage.clear()
         router.push({ name: 'Login', replace: true })
       }
@@ -132,8 +139,8 @@ service.interceptors.response.use(
             cancelButtonText: '取消',
           },
         ).then(() => {
-          const userStore = useUserStore()
-          userStore.token = ''
+          // const userStore = useUserStore()
+          // userStore.token = ''
           localStorage.clear()
           router.push({ name: 'Login', replace: true })
         })

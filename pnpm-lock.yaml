@@ -22,6 +22,8 @@ specifiers:
   exceljs: ^4.3.0
   husky: ^8.0.3
   lint-staged: ^14.0.1
+  mitt: ^3.0.1
+  mock: ^0.1.1
   pinia: ^2.1.6
   postcss: ^8.4.30
   postcss-preset-env: ^9.1.4
@@ -42,6 +44,7 @@ dependencies:
   canvas-datagrid: 0.4.6
   element-plus: 2.3.14_vue@3.3.4
   exceljs: 4.3.0
+  mitt: 3.0.1
   pinia: 2.1.6_typescript@5.2.2+vue@3.3.4
   sheetjs: 2.0.0
   vite-plugin-style-import: 1.4.1_vite@4.4.9
@@ -66,6 +69,7 @@ devDependencies:
   eslint-plugin-vue: 9.17.0_eslint@8.49.0
   husky: 8.0.3
   lint-staged: 14.0.1
+  mock: 0.1.1
   postcss: 8.4.30
   postcss-preset-env: 9.1.4_postcss@8.4.30
   prettier: 3.0.3
@@ -3618,11 +3622,19 @@ packages:
   /minimist/1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
+  /mitt/3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+    dev: false
+
   /mkdirp/0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
     dependencies:
       minimist: 1.2.8
+
+  /mock/0.1.1:
+    resolution: {integrity: sha512-eJcWbgoaFUcPqU0g6AcuPKxoe83f7IPALr+dTwCwBN4Iuj4UlLzPtzUlsIpbLVzaXU0CkxP8PvLWKKlFDYdyCw==}
+    dev: true
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}

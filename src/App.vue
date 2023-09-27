@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import userStore from './store/user'
 import { storeToRefs } from 'pinia'
+import service from '@/utils/request'
+
+service.get('/user/list').then((res) => {
+  console.log(res)
+})
 const store = userStore()
 // `name` 和 `double` `num` 是响应式的 ref
 // 同时通过插件添加的属性也会被提取为 ref
