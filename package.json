@@ -9,7 +9,7 @@
     "prettier": "prettier --write",
     "eslint": "eslint --ext .js,.vue src --fix",
     "add": "git add . ",
-    "cz": "npm run add && git-cz"
+    "cz": "npm run add && git-cz && git push"
   },
   "config": {
     "commitizen": {
@@ -34,6 +34,7 @@
     "element-plus": "^2.3.14",
     "exceljs": "^4.3.0",
     "mitt": "^3.0.1",
+    "pako": "^2.1.0",
     "pinia": "^2.1.6",
     "postcss-preset-env": "^9.1.4",
     "sheetjs": "^2.0.0",
@@ -46,6 +47,7 @@
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@types/node": "^20.6.0",
+    "@types/pako": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-vue": "^4.2.3",
