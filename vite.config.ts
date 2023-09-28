@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import viteMockPlugin from './plugin/mock'
 import postcssPresetEnv from 'postcss-preset-env'
 import styleImport from 'vite-plugin-style-import'
+import GvaPosition from './plugin/gvaPosition'
 import * as path from 'path'
 
 // https://vitejs.dev/config/
@@ -28,6 +29,7 @@ export default defineConfig({
       ],
     }),
     viteMockPlugin(),
+    GvaPosition(),
   ],
   css: {
     preprocessorOptions: {

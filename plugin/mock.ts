@@ -1,3 +1,4 @@
+import { Plugin } from 'vite'
 import path from 'path'
 import fs from 'fs'
 // const mockRouteMap = {}
@@ -5,7 +6,7 @@ import fs from 'fs'
 interface Options {
   entry?: string
 }
-const viteMockPlugin = (options: Options = {}) => {
+const viteMockPlugin = (options: Options = {}): Plugin => {
   options.entry = options?.entry || './mock'
   return {
     name: 'vite-mock-plugin',
