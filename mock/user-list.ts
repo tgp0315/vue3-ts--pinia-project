@@ -1,10 +1,21 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Mock = require('mockjs')
+// const Random = Mock.Random
+const data = Mock.mock({
+  'list|1-10': [
+    {
+      'id|+1': 1,
+      name: '@cname',
+      'gender|1': ['0', '1'],
+      logo: "@Image('100x40', '@color', '@hex', '@cname')",
+      address: '@county(true)',
+      createDate: '@datetime',
+      content: '@cparagraph',
+    },
+  ],
+})
 module.exports = {
   code: 0,
-  b: 2,
-  c: 3,
-  d: 6,
-  a: 1,
-  e: 8,
-  f: 9,
-  g: 10
+  data: data,
+  msg: '成功',
 }

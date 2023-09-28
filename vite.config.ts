@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import viteMockPlugin from './plugin/mock'
-// import postcssPresetEnv from 'postcss-preset-env'
+import postcssPresetEnv from 'postcss-preset-env'
 import styleImport from 'vite-plugin-style-import'
 import * as path from 'path'
 
@@ -27,7 +27,7 @@ export default defineConfig({
         },
       ],
     }),
-    viteMockPlugin()
+    viteMockPlugin(),
   ],
   css: {
     preprocessorOptions: {
@@ -35,13 +35,11 @@ export default defineConfig({
         additionalData: '@import "./src/assets/scss/common.scss";', // 全局公共样式
       },
     },
-    // postcss: {
-    //   plugins: [
-    //     postcssPresetEnv({
-    //       importFrom: path.resolve(__dirname, './src/styles/index.css') // 就是让postcss知道有一些全局变量需要记录下来 ，包含postcss-custom-properties用于处理css变量
-    //     })
-    //   ]
-    // },
+    postcss: {
+      plugins: [
+        postcssPresetEnv(),
+      ],
+    },
   },
   server: {
     port: 8088,

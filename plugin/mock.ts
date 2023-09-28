@@ -17,7 +17,6 @@ const viteMockPlugin = (options: Options = {}) => {
           let route: string = path.resolve(process.cwd(), options.entry, `${method}.ts`)
           const cacheRoute = route.replace(/\\/g, '\\')
           route = route.replace(/\\/g, '/')
-          console.log(route)
           try {
             const isExist = await isFileExisted(route)
             if (isExist) {
@@ -61,7 +60,6 @@ function isFileExisted(path_way) {
 
 // 实现一个send方法
 function send(body) {
-  console.log(body)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let chunk: any = JSON.stringify(body)
   if (chunk) {

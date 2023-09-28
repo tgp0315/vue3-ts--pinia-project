@@ -1,15 +1,15 @@
-import axios from 'axios' // 引入axios
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios, { AxiosInstance, AxiosResponse } from 'axios' // 引入axios
 import { ElMessage, ElMessageBox } from 'element-plus'
 // import { useUserStore } from '@/pinia/modules/user'
 import { emitter } from '@/utils/mitt'
 import router from '@/router/index'
 
-const service = axios.create({
+const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: 99999,
 })
 let acitveAxios = 0
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let timer: any
 const showLoading = () => {
   acitveAxios++
@@ -32,7 +32,6 @@ const closeLoading = () => {
 }
 // http request 拦截器
 service.interceptors.request.use(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config: any) => {
     const url: string | undefined = config?.url
     const urlArr = (url as string).split('/') as Array<string>
@@ -69,7 +68,7 @@ service.interceptors.request.use(
 
 // http response 拦截器
 service.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     const { isShowLoading = true, showMessage = true } = response.config.headers
     // const userStore = useUserStore()
     if (isShowLoading) {
@@ -101,7 +100,7 @@ service.interceptors.response.use(
       return response.data
     }
   },
-  (error) => {
+  (error: any) => {
     const { showLoading = true } = error.config.headers
     if (showLoading) {
       closeLoading()

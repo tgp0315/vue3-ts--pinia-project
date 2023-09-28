@@ -14,6 +14,6 @@ console.log(x, y)
 
 <style scoped>
 h1 {
-  color: var(--main-bg-color);
+  color: var(--main-h1-color);
 }
 </style>
