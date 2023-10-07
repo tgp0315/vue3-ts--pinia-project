@@ -18,7 +18,9 @@ store.$reset()
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style scoped>

@@ -1,4 +1,4 @@
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 export default function GvaPosition(): Plugin {
   return {
     name: 'vite-gva-position-plugin',
@@ -7,6 +7,7 @@ export default function GvaPosition(): Plugin {
       const index = id.lastIndexOf('.')
       const ext = id.substr(index + 1)
       if (ext.toLowerCase() === 'vue') {
+        // console.log(code, 'code')
         return codeLineTrack(code, id)
       }
     },
@@ -23,6 +24,7 @@ const codeLineTrack = (code, id) => {
 }
 
 const addLineAttr = (lineStr, line, id) => {
+  console.log(lineStr, /^\s+</.test(lineStr), 'lineStr')
   if (!/^\s+</.test(lineStr)) {
     return lineStr
   }

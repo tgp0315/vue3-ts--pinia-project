@@ -17,6 +17,7 @@ specifiers:
   cz-conventional-changelog: ^3.3.0
   cz-customizable: ^7.0.0
   date-fns: ^2.30.0
+  dotenv: ^16.3.1
   element-plus: ^2.3.14
   eslint: ^8.49.0
   eslint-config-prettier: ^9.0.0
@@ -74,6 +75,7 @@ devDependencies:
   commitlint-config-cz: 0.13.3
   cz-conventional-changelog: 3.3.0
   cz-customizable: 7.0.0
+  dotenv: 16.3.1
   eslint: 8.49.0
   eslint-config-prettier: 9.0.0_eslint@8.49.0
   eslint-plugin-prettier: 5.0.0_f46d809734b62f2320c3188068cc59cc
@@ -2302,6 +2304,11 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /dotenv/16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /duplexer2/0.1.4:
