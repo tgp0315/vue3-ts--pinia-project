@@ -20,15 +20,16 @@ module.exports = {
       'error',
       {
         singleline: {
-          max: 1,
+          max: 2,
         },
         multiline: {
-          max: 1,
+          max: 15,
         },
       },
     ],
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
+    'vue/multi-word-component-names': 0,
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
     'arrow-spacing': [

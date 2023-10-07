@@ -24,7 +24,6 @@ const codeLineTrack = (code, id) => {
 }
 
 const addLineAttr = (lineStr, line, id) => {
-  console.log(lineStr, /^\s+</.test(lineStr), 'lineStr')
   if (!/^\s+</.test(lineStr)) {
     return lineStr
   }
