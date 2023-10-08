@@ -4,7 +4,7 @@ import pako from 'pako'
 import { decode, encode } from 'js-base64'
 
 // b64Data-->传入加密的数据进行解密
-export const unzip = (b64Data: string) => {
+export const unzip = (b64Data: string): string => {
   const strData = atob(b64Data)
   const charData = strData.split('').map(function (x) {
     return x.charCodeAt(0)
@@ -38,7 +38,7 @@ export const unzip = (b64Data: string) => {
 }
 
 // 加密
-export const zip = (data: object | string) => {
+export const zip = (data: object | string): string => {
   if (!data) return data
   // 判断数据是否需要转为JSON
   const dataJson =

@@ -1,5 +1,5 @@
 /* eslint-disable */
-export const toUpperCase = (str) => {
+export const toUpperCase = (str: string = ''): string => {
   if (str[0]) {
     return str.replace(str[0], str[0].toUpperCase())
   } else {
@@ -7,7 +7,7 @@ export const toUpperCase = (str) => {
   }
 }
 
-export const toLowerCase = (str) => {
+export const toLowerCase = (str: string): string => {
   if (str[0]) {
     return str.replace(str[0], str[0].toLowerCase())
   } else {
@@ -16,13 +16,13 @@ export const toLowerCase = (str) => {
 }
 
 // 驼峰转换下划线
-export const toSQLLine = (str) => {
+export const toSQLLine = (str: string): string => {
   if (str === 'ID') return 'ID'
   return str.replace(/([A-Z])/g, '_$1').toLowerCase()
 }
 
 // 下划线转换驼峰
-export const toHump = (name) => {
+export const toHump = (name: string): string => {
   return name.replace(/\_(\w)/g, function (all, letter) {
     return letter.toUpperCase()
   })

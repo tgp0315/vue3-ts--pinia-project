@@ -16,7 +16,7 @@ const params = {
   flag: false,
 }
 
-const startDrag = (bar: HTMLElement, target: HTMLElement, callback?: definitionInterface) => {
+const startDrag = (bar: HTMLElement, target: HTMLElement, callback?: definitionInterface): void => {
   const screenWidth = document.body.clientWidth // body当前宽度
   const screenHeight = document.documentElement.clientHeight // 可见区域高度
 

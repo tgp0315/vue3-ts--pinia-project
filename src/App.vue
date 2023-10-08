@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Layout from '@/views/layout/index.vue'
+// import Layout from '@/views/layout/index.vue'
 import userStore from './store/user'
 import { storeToRefs } from 'pinia'
 import service from '@/utils/request'
@@ -20,8 +20,8 @@ store.$reset()
 
 <template>
   <div class="app">
-    <layout />
-    <!-- <router-view></router-view> -->
+    <!-- <layout /> -->
+    <router-view></router-view>
   </div>
 </template>
 

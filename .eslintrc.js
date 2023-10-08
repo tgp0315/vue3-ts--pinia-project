@@ -16,17 +16,19 @@ module.exports = {
   ],
   rules: {
     'vue/no-v-model-argument': 'off',
-    'vue/max-attributes-per-line': [
-      'error',
-      {
-        singleline: {
-          max: 2,
-        },
-        multiline: {
-          max: 15,
-        },
-      },
-    ],
+    // 'vue/max-attributes-per-line': [
+    //   'error',
+    //   {
+    //     singleline: {
+    //       max: 2,
+    //     },
+    //     multiline: {
+    //       max: 15,
+    //     },
+    //   },
+    // ],
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/multi-word-component-names': 0,

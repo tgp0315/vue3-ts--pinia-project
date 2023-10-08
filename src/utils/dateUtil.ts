@@ -15,14 +15,14 @@ import {
 const DATE_TIME_FORMAT = 'yyyy-MM-dd HH:mm:ss'
 const DATE_FORMAT = 'yyyy-MM-dd'
 
-export function formatToDateTime(date: string, formatStr = DATE_TIME_FORMAT): string {
+export function formatToDateTime(date: string, formatStr: string = DATE_TIME_FORMAT): string {
   if (date === null || date === undefined || date === '') {
     return ``
   }
   return format(new Date(Date.parse(date)), formatStr)
 }
 
-export function formatToDate(date: string, formatStr = DATE_FORMAT): string {
+export function formatToDate(date: string, formatStr: string = DATE_FORMAT): string {
   if (date === null || date === undefined || date === '') {
     return ``
   }
@@ -30,7 +30,7 @@ export function formatToDate(date: string, formatStr = DATE_FORMAT): string {
 }
 
 export function timestampToTime(timestamp: number): string {
-  const date = new Date(timestamp * 1000)
+  const date: Date = new Date(timestamp * 1000)
   const Y = date.getFullYear() + '-'
   const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
   const D = (date.getDate() + 1 <= 10 ? '0' + date.getDate() : date.getDate()) + ' '
@@ -41,7 +41,7 @@ export function timestampToTime(timestamp: number): string {
 }
 
 export function timestampToTimeNF(timestamp: number): string {
-  const date = new Date(timestamp)
+  const date: Date = new Date(timestamp)
   const Y = date.getFullYear()
   const M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
   const D = date.getDate() + 1 <= 10 ? '0' + date.getDate() : date.getDate()
@@ -59,7 +59,7 @@ export function dateToTimestamp(date: string): number {
 }
 
 export function timestampToDate(timestamp: number): string {
-  const date = new Date(timestamp)
+  const date: Date = new Date(timestamp)
   const Y = date.getFullYear() + '-'
   const M = (date.getMonth() + 1 <= 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
   const D = date.getDate() + 1 <= 10 ? '0' + date.getDate() : date.getDate()
@@ -67,7 +67,7 @@ export function timestampToDate(timestamp: number): string {
 }
 
 export function getTime(): string {
-  const myDate = new Date()
+  const myDate: Date = new Date()
   const hour = myDate.getHours().toString().padStart(2, '0')
   const minutes = myDate.getMinutes().toString().padStart(2, '0')
   const seconed = myDate.getSeconds().toString().padStart(2, '0')
@@ -75,7 +75,7 @@ export function getTime(): string {
 }
 
 export function getDate(): string {
-  const myDate = new Date()
+  const myDate: Date = new Date()
   const month = (myDate.getMonth() + 1).toString().padStart(2, '0')
   const day = myDate.getDate().toString().padStart(2, '0')
   return myDate.getFullYear() + '-' + month + '-' + day
@@ -87,8 +87,8 @@ export function defaultStatisticsTimeOptions(): number {
 
 export function formatBefore(oldDate: Date): string {
   // 当前时间
-  const newDate = new Date()
-  const newDateTime1 = newDate.getTime() // 含有时分秒
+  const newDate: Date = new Date()
+  const newDateTime1: number = newDate.getTime() // 含有时分秒
   newDate.setHours(0)
   newDate.setMinutes(0)
   newDate.setSeconds(0)
@@ -96,7 +96,7 @@ export function formatBefore(oldDate: Date): string {
   const newDateTime2 = newDate.getTime() // 当前时间,不含有时分秒
 
   // 传递时间
-  const oldDateTime1 = oldDate.getTime() // 含有时分秒
+  const oldDateTime1: number = oldDate.getTime() // 含有时分秒
   oldDate.setHours(0)
   oldDate.setMinutes(0)
   oldDate.setSeconds(0)
@@ -140,18 +140,18 @@ export function formatBefore(oldDate: Date): string {
 }
 
 export function formatAfter(end: Date): string {
-  const start = new Date()
-  let sjc = start.getTime() - end.getTime() // 时间差的毫秒数
+  const start: Date = new Date()
+  let sjc: number = start.getTime() - end.getTime() // 时间差的毫秒数
   if (end.getTime() - start.getTime() > 0) {
     sjc = end.getTime() - start.getTime() // 时间差的毫秒数
   }
-  const days = Math.floor(sjc / (24 * 3600 * 1000)) // 计算出相差天数
-  const leave1 = sjc % (24 * 3600 * 1000) // 计算天数后剩余的毫秒数
-  const hours = Math.floor(leave1 / (3600 * 1000)) // 计算出小时数
-  const leave2 = leave1 % (3600 * 1000) // 计算小时数后剩余的毫秒数
-  const minutes = Math.floor(leave2 / (60 * 1000)) // 计算相差分钟数
-  const leave3 = leave2 % (60 * 1000) // 计算分钟数后剩余的毫秒数
-  const seconds = Math.round(leave3 / 1000) // 计算相差秒数
+  const days: number = Math.floor(sjc / (24 * 3600 * 1000)) // 计算出相差天数
+  const leave1: number = sjc % (24 * 3600 * 1000) // 计算天数后剩余的毫秒数
+  const hours: number = Math.floor(leave1 / (3600 * 1000)) // 计算出小时数
+  const leave2: number = leave1 % (3600 * 1000) // 计算小时数后剩余的毫秒数
+  const minutes: number = Math.floor(leave2 / (60 * 1000)) // 计算相差分钟数
+  const leave3: number = leave2 % (60 * 1000) // 计算分钟数后剩余的毫秒数
+  const seconds: number = Math.round(leave3 / 1000) // 计算相差秒数
   if (days > 0) {
     return days + '天后'
   }
@@ -167,7 +167,7 @@ export function formatAfter(end: Date): string {
   return '刚刚'
 }
 
-export function defShortcuts() {
+export function defShortcuts(): object {
   return {
     今天: startOfToday().getTime(),
     昨天: startOfYesterday().getTime(),
@@ -175,9 +175,9 @@ export function defShortcuts() {
   }
 }
 
-export function defRangeShortcuts() {
-  const nowDate = new Date()
-  const dayBase = 86400 * 1000
+export function defRangeShortcuts(): object {
+  const nowDate: Date = new Date()
+  const dayBase: number = 86400 * 1000
   return {
     今天: [startOfToday().getTime(), endOfToday().getTime()] as const,
     昨天: () => {

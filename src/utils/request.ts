@@ -1,35 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosResponse } from 'axios' // 引入axios
 import { ElMessage, ElMessageBox } from 'element-plus'
+// import { get } from 'lodash-es'
+import { showFullScreenLoading, tryHideFullScreenLoading } from './loading'
 // import { useUserStore } from '@/pinia/modules/user'
-import { emitter } from '@/utils/mitt'
+// import { emitter } from '@/utils/mitt'
 import router from '@/router/index'
 
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: 99999,
+  // 跨域时候允许携带凭证
+  withCredentials: true,
 })
-let acitveAxios = 0
-let timer: any
-const showLoading = () => {
-  acitveAxios++
-  if (timer) {
-    clearTimeout(timer)
-  }
-  timer = setTimeout(() => {
-    if (acitveAxios > 0) {
-      emitter.emit('showLoading')
-    }
-  }, 400)
-}
+// let acitveAxios = 0
+// let timer: any
+// const showLoading = () => {
+//   acitveAxios++
+//   if (timer) {
+//     clearTimeout(timer)
+//   }
+//   timer = setTimeout(() => {
+//     if (acitveAxios > 0) {
+//       emitter.emit('showLoading')
+//     }
+//   }, 400)
+// }
 
-const closeLoading = () => {
-  acitveAxios--
-  if (acitveAxios <= 0) {
-    clearTimeout(timer)
-    emitter.emit('closeLoading')
-  }
-}
+// const closeLoading = () => {
+//   acitveAxios--
+//   if (acitveAxios <= 0) {
+//     clearTimeout(timer)
+//     emitter.emit('closeLoading')
+//   }
+// }
 // http request 拦截器
 service.interceptors.request.use(
   (config: any) => {
@@ -38,10 +42,12 @@ service.interceptors.request.use(
     if (urlArr[0] === '') {
       urlArr.splice(0, 1)
     }
-    const { isShowLoading = true } = config.headers
-    if (isShowLoading) {
-      showLoading()
-    }
+    // const { isShowLoading = true } = config.headers
+    // if (isShowLoading) {
+    //   showLoading()
+    // }
+    config.loading ?? (config.loading = true)
+    config.loading && showFullScreenLoading()
     // const userStore = useUserStore()
     config.headers = {
       'Content-Type': 'application/json',
@@ -53,27 +59,23 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    const { isShowLoading = true } = error.config.headers
-    if (isShowLoading) {
-      closeLoading()
-    }
-    ElMessage({
-      showClose: true,
-      message: error,
-      type: 'error',
-    })
-    return error
+    // const { isShowLoading = true } = error.config.headers
+    // ElMessage({
+    //   showClose: true,
+    //   message: error,
+    //   type: 'error',
+    // })
+    // return error
+    return Promise.reject(error)
   },
 )
 
 // http response 拦截器
 service.interceptors.response.use(
   (response: AxiosResponse) => {
-    const { isShowLoading = true, showMessage = true } = response.config.headers
+    // const { showMessage = true } = response.config
     // const userStore = useUserStore()
-    if (isShowLoading) {
-      closeLoading()
-    }
+    tryHideFullScreenLoading()
     // if (response.headers['new-token']) {
     //   userStore.setToken(response.headers['new-token'])
     // }
@@ -101,10 +103,11 @@ service.interceptors.response.use(
     }
   },
   (error: any) => {
-    const { showLoading = true } = error.config.headers
-    if (showLoading) {
-      closeLoading()
-    }
+    // const { showLoading = true } = error.config.headers
+    // if (showLoading) {
+    //   closeLoading()
+    // }
+    tryHideFullScreenLoading()
 
     if (!error.response) {
       ElMessageBox.confirm(

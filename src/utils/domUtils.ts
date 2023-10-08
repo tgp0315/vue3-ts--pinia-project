@@ -21,12 +21,12 @@ export function getBoundingClientRect(element: Element): DOMRect | number {
   return element.getBoundingClientRect()
 }
 
-function trim(string: string) {
+function trim(string: string): string {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
 }
 
 /* istanbul ignore next */
-export function hasClass(el: Element, cls: string) {
+export function hasClass(el: Element, cls: string): boolean {
   if (!el || !cls) return false
   if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.')
   if (el.classList) {
@@ -37,13 +37,13 @@ export function hasClass(el: Element, cls: string) {
 }
 
 /* istanbul ignore next */
-export function addClass(el: Element, cls: string) {
-  if (!el) return
-  let curClass = el.className
-  const classes = (cls || '').split(' ')
+export function addClass(el: Element, cls: string): boolean {
+  if (!el) return false
+  let curClass: string = el.className
+  const classes: Array<string> = (cls || '').split(' ')
 
   for (let i = 0, j = classes.length; i < j; i++) {
-    const clsName = classes[i]
+    const clsName: string = classes[i]
     if (!clsName) continue
 
     if (el.classList) {
@@ -55,16 +55,17 @@ export function addClass(el: Element, cls: string) {
   if (!el.classList) {
     el.className = curClass
   }
+  return true
 }
 
 /* istanbul ignore next */
-export function removeClass(el: Element, cls: string) {
-  if (!el || !cls) return
-  const classes = cls.split(' ')
-  let curClass = ' ' + el.className + ' '
+export function removeClass(el: Element, cls: string): boolean {
+  if (!el || !cls) return false
+  const classes: string[] = cls.split(' ')
+  let curClass: string = ' ' + el.className + ' '
 
   for (let i = 0, j = classes.length; i < j; i++) {
-    const clsName = classes[i]
+    const clsName: string = classes[i]
     if (!clsName) continue
 
     if (el.classList) {
@@ -76,6 +77,7 @@ export function removeClass(el: Element, cls: string) {
   if (!el.classList) {
     el.className = trim(curClass)
   }
+  return true
 }
 /**
  * Get the left and top offset of the current element
@@ -89,30 +91,30 @@ export function removeClass(el: Element, cls: string) {
  * @description:
  */
 export function getViewportOffset(element: Element): ViewportOffsetResult {
-  const doc = document.documentElement
+  const doc: HTMLElement = document.documentElement
 
-  const docScrollLeft = doc.scrollLeft
-  const docScrollTop = doc.scrollTop
-  const docClientLeft = doc.clientLeft
-  const docClientTop = doc.clientTop
+  const docScrollLeft: number = doc.scrollLeft
+  const docScrollTop: number = doc.scrollTop
+  const docClientLeft: number = doc.clientLeft
+  const docClientTop: number = doc.clientTop
 
-  const pageXOffset = window.pageXOffset
-  const pageYOffset = window.pageYOffset
+  const pageXOffset: number = window.pageXOffset
+  const pageYOffset: number = window.pageYOffset
 
-  const box = getBoundingClientRect(element)
+  const box: number | DOMRect = getBoundingClientRect(element)
 
   const { left: retLeft, top: rectTop, width: rectWidth, height: rectHeight } = box as DOMRect
 
-  const scrollLeft = (pageXOffset || docScrollLeft) - (docClientLeft || 0)
-  const scrollTop = (pageYOffset || docScrollTop) - (docClientTop || 0)
-  const offsetLeft = retLeft + pageXOffset
-  const offsetTop = rectTop + pageYOffset
+  const scrollLeft: number = (pageXOffset || docScrollLeft) - (docClientLeft || 0)
+  const scrollTop: number = (pageYOffset || docScrollTop) - (docClientTop || 0)
+  const offsetLeft: number = retLeft + pageXOffset
+  const offsetTop: number = rectTop + pageYOffset
 
-  const left = offsetLeft - scrollLeft
-  const top = offsetTop - scrollTop
+  const left: number = offsetLeft - scrollLeft
+  const top: number = offsetTop - scrollTop
 
-  const clientWidth = window.document.documentElement.clientWidth
-  const clientHeight = window.document.documentElement.clientHeight
+  const clientWidth: number = window.document.documentElement.clientWidth
+  const clientHeight: number = window.document.documentElement.clientHeight
   return {
     left: left,
     top: top,
@@ -151,7 +153,7 @@ export function on(
 export function off(
   element: Element | HTMLElement | Document | Window,
   event: string,
-  handler: Fn,
+  handler: () => void,
 ): void {
   if (element && event && handler) {
     element.removeEventListener(event, handler, false)
